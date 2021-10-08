@@ -1,0 +1,36 @@
+{
+  "name": "challenge",
+  "version": "1.0.0",
+  "description": "hatchways-backend-challenge",
+  "main": "server.js",
+  "scripts": {
+    "prd": "cross-env NODE_ENV=production node src/server",
+    "stg": "cross-env NODE_ENV=staging node src/server",
+    "dev": "cross-env NODE_ENV=development nodemon src/server",
+    "local": "cross-env NODE_ENV=local nodemon --no-deprecation --trace-deprecation --trace-warnings src/server",
+    "test": "cross-env NODE_ENV=test mocha --recursive tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kchoi85/challenge-request.git"
+  },
+  "author": "kihoon david choi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kchoi85/challenge-request/issues"
+  },
+  "homepage": "https://github.com/kchoi85/challenge-request#readme",
+  "dependencies": {
+    "axios": "^0.22.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.13",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
