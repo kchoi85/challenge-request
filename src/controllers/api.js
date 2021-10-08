@@ -1,4 +1,5 @@
 const axios = require("axios");
+const rclient = require("../redis_db");
 
 exports.ping_server = (req, res) => {
   return res.status(200).json({
@@ -13,6 +14,12 @@ exports.get_posts_param = async (req, res) => {
   const SORTBY_OPTIONS = ["id", "reads", "likes", "popularity"];
   const DIRECTION_OPTIONS = ["asc", "desc"];
   direction = direction || "asc";
+
+  // get data from redis_db
+  //   const rdata = await rclient.get("posts");
+  //   if (rdata) {
+  //     console.log(JSON.parse(rdata));
+  //   }
 
   // Error handling - guarding principle
   if (!tag) {
@@ -31,15 +38,6 @@ exports.get_posts_param = async (req, res) => {
     });
   }
 
-  // Handling input tags - Multiple tag queries
-  if (tag && tag.includes(",")) {
-    listOfTags = tag.split(",");
-    sendGetRequest(listOfTags, sortBy, direction);
-  } else if (tag) {
-    // Single tag
-    sendGetRequest(tag, sortBy, direction);
-  }
-
   // Handling tags helper function
   const sendGetRequest = async (tag, sortBy, direction) => {
     // check if input: tag is an array (multiple tags)
@@ -54,6 +52,9 @@ exports.get_posts_param = async (req, res) => {
         }
         // Convert set into an array for filtering
         let filteredData = filter(Array.from(posts));
+
+        // Set key data in redis
+        // await rclient.set("posts", JSON.stringify(filteredData));
         return res.status(200).json({
           posts: filteredData,
         });
@@ -70,6 +71,9 @@ exports.get_posts_param = async (req, res) => {
         );
         // filter by sortBy and Direction
         let posts = filter(resp.data.posts);
+
+        // Set key data in redis
+        // await rclient.set("posts", JSON.stringify(posts));
         res.status(200).json({
           posts,
         });
@@ -92,4 +96,13 @@ exports.get_posts_param = async (req, res) => {
       return sortedResp;
     }
   };
+
+  // Handling input tags - Multiple tag queries
+  if (tag && tag.includes(",")) {
+    listOfTags = tag.split(",");
+    sendGetRequest(listOfTags, sortBy, direction);
+  } else if (tag) {
+    // Single tag
+    sendGetRequest(tag, sortBy, direction);
+  }
 };

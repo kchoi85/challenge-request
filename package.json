@@ -8,7 +8,7 @@
     "stg": "cross-env NODE_ENV=staging node src/server",
     "dev": "cross-env NODE_ENV=development nodemon src/server",
     "local": "cross-env NODE_ENV=local nodemon --no-deprecation --trace-deprecation --trace-warnings src/server",
-    "test": "cross-env NODE_ENV=test mocha --recursive tests"
+    "test": "cross-env NODE_ENV=test mocha --recursive tests/posts"
   },
   "repository": {
     "type": "git",
@@ -26,9 +26,13 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "mocha": "^9.1.2",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.13",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "power-assert": "^1.6.1",
+    "redis": "^3.1.2",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
